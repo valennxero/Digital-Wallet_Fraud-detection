@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBoxLogin = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
@@ -39,29 +37,6 @@
             this.labelHomeMenu = new System.Windows.Forms.Label();
             this.buttonSignUp = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(31, 65);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 20);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Login sebagai";
-            // 
-            // comboBoxLogin
-            // 
-            this.comboBoxLogin.FormattingEnabled = true;
-            this.comboBoxLogin.Items.AddRange(new object[] {
-            "Admin",
-            "User"});
-            this.comboBoxLogin.Location = new System.Drawing.Point(172, 65);
-            this.comboBoxLogin.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxLogin.Name = "comboBoxLogin";
-            this.comboBoxLogin.Size = new System.Drawing.Size(160, 24);
-            this.comboBoxLogin.TabIndex = 25;
             // 
             // label3
             // 
@@ -155,8 +130,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(477, 584);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBoxLogin);
             this.Controls.Add(this.buttonSignUp);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonLogin);
@@ -174,9 +147,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBoxLogin;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.TextBox textBoxPassword;

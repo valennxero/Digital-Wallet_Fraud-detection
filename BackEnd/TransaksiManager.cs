@@ -196,7 +196,7 @@ public static int GetTransaksiMenitTerakhir(int userId)
             {
                 string pinTerenkripsi = dt.Rows[0]["pin_encrypted"].ToString();
                 // Dekripsi untuk melihat aslinya
-                string pinAsli = Enkripsi.AESDecrypt(pinTerenkripsi);
+                string pinAsli = Enkripsi.DecryptDouble(pinTerenkripsi);
 
                 return pinAsli == inputPin;
             }
@@ -205,7 +205,7 @@ public static int GetTransaksiMenitTerakhir(int userId)
         public static void SetWalletPin(int userId, string pinPolos)
         {
             // 1. Enkripsi PIN menggunakan AES agar aman di database
-            string pinTerenkripsi = Enkripsi.AESEncrypt(pinPolos);
+            string pinTerenkripsi = Enkripsi.EncryptDouble(pinPolos);
 
             // 2. Update kolom pin_encrypted berdasarkan user_id
             string query = $@"UPDATE wallets SET pin_encrypted = '{pinTerenkripsi}' 

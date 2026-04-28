@@ -111,9 +111,9 @@
             this.label1.Location = new System.Drawing.Point(68, 30);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 16);
+            this.label1.Size = new System.Drawing.Size(108, 16);
             this.label1.TabIndex = 14;
-            this.label1.Text = "History Gass Send";
+            this.label1.Text = "Histori Transaksi";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // buttonSearch

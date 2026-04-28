@@ -65,6 +65,8 @@ namespace Digital_Wallet_ISA
         private void buttonTransfer_Click_1(object sender, EventArgs e)
         {
             FormTransfer frm = new FormTransfer(_userId);
+            
+            frm.Owner = this;
             frm.ShowDialog();
             MuatDataUser();
         }

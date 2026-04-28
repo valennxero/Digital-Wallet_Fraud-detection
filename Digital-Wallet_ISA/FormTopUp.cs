@@ -1,5 +1,6 @@
 ﻿using DigitalWallet.BackEnd;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace Digital_Wallet_ISA
@@ -103,6 +104,77 @@ namespace Digital_Wallet_ISA
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonPin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int walletId = TransaksiManager.GetWalletId(_userId);
+                string query = $"SELECT * FROM users WHERE id='{_userId}'";
+                DataTable dtUser = Koneksi.JalankanSelect(query);
+
+
+                int failed = Convert.ToInt32(dtUser.Rows[0]["failed_attempts"]);
+                string pin = textBoxPin.Text;
+
+                // 1. Verifikasi PIN Dasar
+                bool pinValid = TransaksiManager.VerifikasiPin(walletId, pin);
+
+                if (pinValid)
+                {
+                    // 2. Ambil data pendukung untuk Fraud Detection
+                    decimal jumlahTransfer = decimal.Parse(numericUpDownNominal.Text); // Ambil dari input nominal
+                    int txMenitTerakhir = TransaksiManager.GetTransaksiMenitTerakhir(_userId);
+
+                    // 3. Jalankan Analisis Fraud
+                    var fraudResult = FraudDetector.AnalyzeTransaction(_userId, jumlahTransfer, txMenitTerakhir);
+
+                    if (fraudResult.IsFlagged)
+                    {
+                        // Jika terdeteksi fraud (misal: transfer terlalu sering dalam 1 menit)
+                        string pesan = $"Peringatan Keamanan: {fraudResult.Reason}\n" +
+                                       $"Keputusan: {fraudResult.Severity}";
+
+                        MessageBox.Show(pesan, "Fraud Detection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        // Opsional: Tetap izinkan tapi catat, atau blokir total
+                        if (fraudResult.Severity == "High")
+                        {
+                            buttonTopUp.Enabled = false;
+                            return;
+                        }
+                    }
+
+                    // Jika semua aman atau severity rendah
+                    buttonTopUp.Enabled = true;
+                    MessageBox.Show("PIN Berhasil diverifikasi.");
+                }
+                else
+                {
+                    failed++;
+                    Koneksi.JalankanQuery($"UPDATE users SET failed_attempts={failed} WHERE id={_userId}");
+
+                    bool nowLocked = FraudDetector.CheckAndLockAccount(_userId, failed);
+                    if (nowLocked)
+                    {
+                        MessageBox.Show("Akun dikunci karena 3x percobaan gagal.");
+                        this.Close(); // Tutup form karena akun terkunci
+                        Owner.Close();
+                        Application.OpenForms["formLogin"].Show();
+
+                    }
+                    else
+                        MessageBox.Show($"Pin salah! Percobaan {failed}/3");
+                    // Catat kegagalan PIN ke Audit Log untuk memantau Brute Force
+                    TransaksiManager.CatatAuditLog(_userId, "Gagal verifikasi PIN (Kemungkinan percobaan Brute Force)");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Pastikan nominal sudah diisi: " + ex.Message);
+            }
         }
     }
 }

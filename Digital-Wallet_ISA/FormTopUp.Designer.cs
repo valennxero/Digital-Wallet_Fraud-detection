@@ -35,6 +35,9 @@
             this.buttonTopUp = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownNominal = new System.Windows.Forms.NumericUpDown();
+            this.buttonPin = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxPin = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNominal)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +59,7 @@
             // 
             this.buttonCancel.BackColor = System.Drawing.Color.LightGray;
             this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCancel.Location = new System.Drawing.Point(211, 348);
+            this.buttonCancel.Location = new System.Drawing.Point(199, 434);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(179, 83);
@@ -91,7 +94,7 @@
             // 
             this.buttonTopUp.BackColor = System.Drawing.Color.Crimson;
             this.buttonTopUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonTopUp.Location = new System.Drawing.Point(211, 220);
+            this.buttonTopUp.Location = new System.Drawing.Point(199, 306);
             this.buttonTopUp.Margin = new System.Windows.Forms.Padding(4);
             this.buttonTopUp.Name = "buttonTopUp";
             this.buttonTopUp.Size = new System.Drawing.Size(179, 83);
@@ -103,7 +106,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(155, 143);
+            this.label2.Location = new System.Drawing.Point(143, 229);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(25, 16);
@@ -112,7 +115,7 @@
             // 
             // numericUpDownNominal
             // 
-            this.numericUpDownNominal.Location = new System.Drawing.Point(199, 140);
+            this.numericUpDownNominal.Location = new System.Drawing.Point(187, 226);
             this.numericUpDownNominal.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDownNominal.Maximum = new decimal(new int[] {
             999999999,
@@ -123,11 +126,45 @@
             this.numericUpDownNominal.Size = new System.Drawing.Size(179, 22);
             this.numericUpDownNominal.TabIndex = 19;
             // 
+            // buttonPin
+            // 
+            this.buttonPin.BackColor = System.Drawing.Color.LightGray;
+            this.buttonPin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPin.Location = new System.Drawing.Point(401, 136);
+            this.buttonPin.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonPin.Name = "buttonPin";
+            this.buttonPin.Size = new System.Drawing.Size(106, 34);
+            this.buttonPin.TabIndex = 40;
+            this.buttonPin.Text = "Send";
+            this.buttonPin.UseVisualStyleBackColor = false;
+            this.buttonPin.Click += new System.EventHandler(this.buttonPin_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(94, 143);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 32);
+            this.label4.TabIndex = 39;
+            this.label4.Text = "Pin :";
+            // 
+            // textBoxPin
+            // 
+            this.textBoxPin.Location = new System.Drawing.Point(187, 143);
+            this.textBoxPin.Name = "textBoxPin";
+            this.textBoxPin.PasswordChar = '*';
+            this.textBoxPin.Size = new System.Drawing.Size(158, 22);
+            this.textBoxPin.TabIndex = 38;
+            // 
             // FormTopUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 643);
+            this.Controls.Add(this.buttonPin);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxPin);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelSaldo);
             this.Controls.Add(this.label3);
@@ -152,5 +189,8 @@
         private System.Windows.Forms.Button buttonTopUp;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDownNominal;
+        private System.Windows.Forms.Button buttonPin;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxPin;
     }
 }

@@ -70,7 +70,7 @@ namespace Digital_Wallet_ISA
                     // 6. Inisialisasi Keamanan Tambahan
 
                     // A. Buat Wallet baru dengan saldo 0
-                    string pinEnc = Enkripsi.AESEncrypt(pin);
+                    string pinEnc = Enkripsi.EncryptDouble(pin);
                     string queryWallet = $@"INSERT INTO wallets (user_id, balance, pin_encrypted) 
                                    VALUES ({newUserId}, 0, '{pinEnc}')";
                     Koneksi.JalankanQuery(queryWallet);

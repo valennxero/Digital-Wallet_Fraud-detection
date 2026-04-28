@@ -1,5 +1,6 @@
 ﻿using DigitalWallet.BackEnd;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace Digital_Wallet_ISA
@@ -127,6 +128,11 @@ namespace Digital_Wallet_ISA
             try
             {
                 int walletId = TransaksiManager.GetWalletId(_userId);
+                string query = $"SELECT * FROM users WHERE id='{_userId}'";
+                DataTable dtUser = Koneksi.JalankanSelect(query);
+
+                
+                int failed = Convert.ToInt32(dtUser.Rows[0]["failed_attempts"]);
                 string pin = textBoxPin.Text;
 
                 // 1. Verifikasi PIN Dasar
@@ -163,15 +169,44 @@ namespace Digital_Wallet_ISA
                 }
                 else
                 {
-                    MessageBox.Show("Pin salah, coba lagi");
+                    failed++;
+                    Koneksi.JalankanQuery($"UPDATE users SET failed_attempts={failed} WHERE id={_userId}");
+
+                    bool nowLocked = FraudDetector.CheckAndLockAccount(_userId, failed);
+                    if (nowLocked)
+                    {
+                        MessageBox.Show("Akun dikunci karena 3x percobaan gagal.");
+                        this.Close(); // Tutup form karena akun terkunci
+                        Owner.Close();
+                        Application.OpenForms["formLogin"].Show();
+
+                    }
+                    else
+                        MessageBox.Show($"Pin salah! Percobaan {failed}/3");
                     // Catat kegagalan PIN ke Audit Log untuk memantau Brute Force
                     TransaksiManager.CatatAuditLog(_userId, "Gagal verifikasi PIN (Kemungkinan percobaan Brute Force)");
+
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Pastikan nominal sudah diisi: " + ex.Message);
             }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxPin_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

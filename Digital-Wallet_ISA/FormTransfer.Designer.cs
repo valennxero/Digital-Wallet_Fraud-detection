@@ -70,6 +70,7 @@
             this.buttonCancel.TabIndex = 30;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // labelSaldo
             // 
@@ -173,6 +174,7 @@
             this.label4.Size = new System.Drawing.Size(71, 32);
             this.label4.TabIndex = 36;
             this.label4.Text = "Pin :";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // textBoxPin
             // 
@@ -181,6 +183,7 @@
             this.textBoxPin.PasswordChar = '*';
             this.textBoxPin.Size = new System.Drawing.Size(158, 22);
             this.textBoxPin.TabIndex = 35;
+            this.textBoxPin.TextChanged += new System.EventHandler(this.textBoxPin_TextChanged);
             // 
             // buttonPin
             // 
