@@ -50,18 +50,6 @@ namespace DigitalWallet.BackEnd
         //  VERIFIKASI MASTER PASSWORD
         //  Return true jika cocok, false jika salah
         // =============================================
-        public static bool Verifikasi(int userId, string inputPassword)
-        {
-            var dt = Koneksi.JalankanSelect(
-                $"SELECT master_hash, salt FROM master_config WHERE user_id = {userId}");
-
-            if (dt.Rows.Count == 0)
-                return false;
-
-            string storedHash = dt.Rows[0]["master_hash"].ToString();
-            string salt = dt.Rows[0]["salt"].ToString();
-
-            return Enkripsi.VerifyPassword(inputPassword, storedHash, salt);
-        }
+       
     }
 }

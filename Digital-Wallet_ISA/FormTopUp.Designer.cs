@@ -174,6 +174,7 @@
             this.Controls.Add(this.labelHomeMenu);
             this.Name = "FormTopUp";
             this.Text = "FormTopUp";
+            this.Load += new System.EventHandler(this.FormTopUp_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNominal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

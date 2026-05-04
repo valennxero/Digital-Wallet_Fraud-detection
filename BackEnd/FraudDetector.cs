@@ -44,12 +44,16 @@ namespace DigitalWallet.BackEnd
                 return result;
         }
 
-        public static void SaveFraudLog(int userId, int transactionId, string reason, string severity)
+        public static void SaveFraudLog(int userId, int transactionId, string reason, string severity, decimal amount, string description)
         {
-            // Escape string secara manual karena class Koneksi menggunakan string mentah
+            // Pastikan deskripsi tetap aman (terenkripsi) atau di-escape jika plain text
             string safeReason = reason?.Replace("'", "''") ?? "";
-            string query = $@"INSERT INTO fraud_logs (user_id, transaction_id, reason, severity, created_at) 
-                             VALUES ({userId}, {transactionId}, '{safeReason}', '{severity}', NOW())";
+            string safeDescription = description?.Replace("'", "''") ?? "";
+
+            // Tambahkan kolom amount dan description ke dalam query INSERT
+            string query = $@"INSERT INTO fraud_logs (user_id, transaction_id, reason, severity, amount, description, created_at) 
+                     VALUES ({userId}, {transactionId}, '{safeReason}', '{severity}', {amount}, '{safeDescription}', NOW())";
+
             Koneksi.JalankanQuery(query);
         }
 

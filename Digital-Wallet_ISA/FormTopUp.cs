@@ -139,15 +139,17 @@ namespace Digital_Wallet_ISA
                         MessageBox.Show(pesan, "Fraud Detection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         // Opsional: Tetap izinkan tapi catat, atau blokir total
-                        if (fraudResult.Severity == "High")
+                        if (fraudResult.Severity == "high")
                         {
                             buttonTopUp.Enabled = false;
+                            numericUpDownNominal.Enabled = false;
                             return;
                         }
                     }
 
                     // Jika semua aman atau severity rendah
                     buttonTopUp.Enabled = true;
+                    numericUpDownNominal.Enabled = true;
                     MessageBox.Show("PIN Berhasil diverifikasi.");
                 }
                 else
@@ -175,6 +177,12 @@ namespace Digital_Wallet_ISA
             {
                 MessageBox.Show("Pastikan nominal sudah diisi: " + ex.Message);
             }
+        }
+
+        private void FormTopUp_Load(object sender, EventArgs e)
+        {
+            buttonTopUp.Enabled = false; // Nonaktifkan tombol Top Up sampai PIN diverifikasi
+            numericUpDownNominal.Enabled = false; // Nonaktifkan input nominal sampai PIN diverifikasi
         }
     }
 }

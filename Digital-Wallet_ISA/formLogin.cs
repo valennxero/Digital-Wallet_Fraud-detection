@@ -90,7 +90,16 @@ namespace Digital_Wallet_ISA
                         if (role.ToLower() == "admin")
                             new FormAdmin(userId).Show();
                         else
-                            new formUtama(userId).Show();
+                        {
+                            if (MasterPassword.SudahPunyaMasterPassword(userId))
+                            {
+                                new formUtama(userId).Show();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Anda belum memiliki master password. Silakan buat master password terlebih dahulu.");
+                            }
+                        }
 
                         this.Hide();
                     }

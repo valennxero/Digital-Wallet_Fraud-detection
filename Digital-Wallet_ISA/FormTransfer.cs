@@ -85,7 +85,7 @@ namespace Digital_Wallet_ISA
                 if (fraudCheck.IsFlagged)
                 {
                     // Simpan log kecurigaan ke DB
-                    FraudDetector.SaveFraudLog(_userId, -1, fraudCheck.Reason, fraudCheck.Severity);
+                    FraudDetector.SaveFraudLog(_userId, -1, fraudCheck.Reason, fraudCheck.Severity, jumlah, pesan);
 
                     if (fraudCheck.Severity == "high")
                     {

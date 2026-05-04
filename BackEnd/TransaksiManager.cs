@@ -53,6 +53,7 @@ namespace DigitalWallet.BackEnd
             decimal saldo = GetSaldo(fromId);
             if (saldo < jumlah) return (false, "Saldo tidak cukup", -1);
 
+            deskripsi = Enkripsi.EncryptDouble(deskripsi);
             Koneksi k = new Koneksi();
             k.Open();
             MySqlTransaction tr = k.KoneksiDB.BeginTransaction();
@@ -143,7 +144,7 @@ namespace DigitalWallet.BackEnd
             int transId = GetLastInsertId();
             if (fraud.IsFlagged)
             {
-                FraudDetector.SaveFraudLog(userId, transId, fraud.Reason, fraud.Severity);
+                FraudDetector.SaveFraudLog(userId, transId, fraud.Reason, fraud.Severity, jumlah, deskripsi);
             }
 
             CatatAuditLog(userId, $"Top Up berhasil: Rp {jumlah:N0}");

@@ -58,12 +58,33 @@ namespace Digital_Wallet_ISA
 
                 foreach (DataRow row in dt.Rows)
                 {
+                    string deskripsiRaw = row[4].ToString();
+                    string deskripsiTampil = "";
+
+                    try
+                    {
+                        // Cek apakah data kosong atau terlalu pendek untuk Base64
+                        if (!string.IsNullOrEmpty(deskripsiRaw) && deskripsiRaw.Length % 4 == 0)
+                        {
+                            deskripsiTampil = Enkripsi.DecryptDouble(deskripsiRaw);
+                        }
+                        else
+                        {
+                            deskripsiTampil = deskripsiRaw;
+                        }
+                    }
+                    catch
+                    {
+                        // Jika gagal dekripsi (karena teks biasa), tampilkan teks aslinya
+                        deskripsiTampil = deskripsiRaw;
+                    }
+
                     dataGridViewDataRiwayat.Rows.Add(
                         row[0],  // Id Transaksi
                         row[1],  // Tanggal
                         row[2],  // Jumlah (Rp)
                         row[3],  // Tipe
-                        row[4],  // Keterangan
+                        deskripsiTampil, // Hasil dekripsi atau teks asli
                         row[5]   // Status Fraud
                     );
                 }
