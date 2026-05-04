@@ -13,7 +13,7 @@ namespace DigitalWallet.BackEnd
     public class FraudDetector
     {
         private const decimal LARGE_AMOUNT = 10_000_000;
-        private const int MAX_TX_PER_MINUTE = 5;
+        private const int MAX_TX_PER_MINUTE = 3;
         private const int MAX_FAILED_LOGIN = 3;
         private const int MAX_PIN_ATTEMPTS = 5;
 
@@ -48,7 +48,7 @@ namespace DigitalWallet.BackEnd
         {
             // Pastikan deskripsi tetap aman (terenkripsi) atau di-escape jika plain text
             string safeReason = reason?.Replace("'", "''") ?? "";
-            string safeDescription = description?.Replace("'", "''") ?? "";
+            string safeDescription = Enkripsi.AESEncrypt(description?.Replace("'", "''") ?? "");
 
             // Tambahkan kolom amount dan description ke dalam query INSERT
             string query = $@"INSERT INTO fraud_logs (user_id, transaction_id, reason, severity, amount, description, created_at) 

@@ -169,22 +169,18 @@ namespace DigitalWallet.BackEnd
     }
 }
 
-// Helper untuk menghitung transaksi menit terakhir (untuk Fraud Detection)
-public static int GetTransaksiMenitTerakhir(int userId)
-{
-            // Cari walletId berdasarkan userId terlebih dahulu
+        // Helper untuk menghitung transaksi menit terakhir (untuk Fraud Detection)
+        public static int GetTransaksiMenitTerakhir(int userId)
+        {
+            // Kita perlu mendapatkan wallet_id milik user terlebih dahulu
             int walletId = GetWalletId(userId);
 
-            if (walletId == -1) return 0;
-
-            // Hitung jumlah transaksi dalam 1 menit terakhir
-            // Sesuai ERD, kita cek kolom from_wallet_id atau to_wallet_id
+            // Hitung berapa kali wallet tersebut melakukan transaksi dalam 1 menit terakhir
             string query = $@"SELECT COUNT(*) FROM transactions 
-                      WHERE (from_wallet_id = {walletId} OR to_wallet_id = {walletId}) 
-                      AND created_at >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
+                     WHERE from_wallet_id = {walletId} 
+                     AND created_at >= NOW() - INTERVAL 1 MINUTE";
 
-            object hasil = Koneksi.JalankanSelectSatu(query);
-            return hasil != null ? Convert.ToInt32(hasil) : 0;
+            return Convert.ToInt32(Koneksi.JalankanSelectSatu(query));
         }
 
 

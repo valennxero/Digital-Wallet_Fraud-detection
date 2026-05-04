@@ -1,4 +1,5 @@
-﻿using DigitalWallet.BackEnd;
+﻿using BackEnd;
+using DigitalWallet.BackEnd;
 using System;
 using System.Data;
 using System.Drawing;
@@ -20,6 +21,7 @@ namespace Digital_Wallet_ISA
         {
             MuatStatistik();
             MuatFraudLogs();
+            MuatUserTerkunci();
         }
 
         // 1. Memantau Statistik Global
@@ -37,10 +39,9 @@ namespace Digital_Wallet_ISA
         private void MuatFraudLogs()
         {
             // Gunakan LEFT JOIN agar data fraud tetap muncul meskipun relasi tabel lain bermasalah
-            string query = @"SELECT f.id, u.username, f.reason, f.severity, t.amount, t.description, f.created_at 
+            string query = @"SELECT f.id, u.username, f.reason, f.severity, f.amount, f.description, f.created_at 
                  FROM fraud_logs f
-                 LEFT JOIN users u ON f.user_id = u.id
-                 LEFT JOIN transactions t ON f.transaction_id = t.id
+                    LEFT JOIN users u ON f.user_id = u.id
                  ORDER BY f.created_at DESC";
 
             DataTable dt = Koneksi.JalankanSelect(query);
@@ -88,6 +89,36 @@ namespace Digital_Wallet_ISA
         {
             MuatStatistik();
             MuatFraudLogs();
+        }
+
+        private void buttonUnlock_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLocked.SelectedRows.Count > 0)
+            {
+                int userId = Convert.ToInt32(dataGridViewLocked.SelectedRows[0].Cells["id"].Value);
+                string username = dataGridViewLocked.SelectedRows[0].Cells["username"].Value.ToString();
+
+                DialogResult res = MessageBox.Show($"Buka kunci akun untuk {username}?", "Konfirmasi", MessageBoxButtons.YesNo);
+
+                if (res == DialogResult.Yes)
+                {
+                    UserManager.UnlockUser(userId);
+                    MessageBox.Show("Akun berhasil dibuka!");
+
+                    // Audit Log: Catat tindakan admin
+                    string logAction = $"Admin (ID:{_adminId}) unlocked user {username}";
+                    Koneksi.JalankanQuery($"INSERT INTO audit_logs (user_id, action, created_at) VALUES ({_adminId}, '{logAction}', NOW())");
+
+                    MessageBox.Show("Akun berhasil dibuka!");
+                    MuatUserTerkunci(); // Refresh list
+                }
+            }
+        }
+
+        private void MuatUserTerkunci()
+        {
+            // Panggil method dari UserManager yang sudah kita bahas sebelumnya
+            dataGridViewLocked.DataSource = UserManager.GetLockedUsers();
         }
     }
 }
