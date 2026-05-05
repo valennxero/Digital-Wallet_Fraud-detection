@@ -54,6 +54,7 @@ namespace Digital_Wallet_ISA
             FormTopUp frm = new FormTopUp(_userId);
 
             // Gunakan ShowDialog agar form utama menunggu sampai Top Up selesai
+            frm.Owner = this;
             frm.ShowDialog();
 
             // Setelah FormTopUp ditutup, refresh saldo di form utama

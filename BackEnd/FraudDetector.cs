@@ -15,7 +15,7 @@ namespace DigitalWallet.BackEnd
         private const decimal LARGE_AMOUNT = 10_000_000;
         private const int MAX_TX_PER_MINUTE = 3;
         private const int MAX_FAILED_LOGIN = 3;
-        private const int MAX_PIN_ATTEMPTS = 5;
+        private const int MAX_PIN_ATTEMPTS = 3;
 
         public static FraudResult AnalyzeTransaction(int userId, decimal amount, int txCountLastMinute)
         {
