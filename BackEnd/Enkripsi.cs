@@ -108,19 +108,5 @@ namespace DigitalWallet.BackEnd
             string inputHash = HashPassword(inputPassword, salt);
             return inputHash == storedHash;
         }
-
-        //  AUTO-GENERATE PASSWORD
-        public static string GeneratePassword(int length = 16)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-            byte[] randomBytes = new byte[length];
-            using (var rng = RandomNumberGenerator.Create())
-                rng.GetBytes(randomBytes);
-
-            StringBuilder sb = new StringBuilder(length);
-            foreach (byte b in randomBytes)
-                sb.Append(chars[b % chars.Length]);
-            return sb.ToString();
-        }
     }
 }

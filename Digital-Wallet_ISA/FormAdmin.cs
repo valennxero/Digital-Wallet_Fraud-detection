@@ -85,11 +85,6 @@ namespace Digital_Wallet_ISA
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            MuatStatistik();
-            MuatFraudLogs();
-        }
 
         private void buttonUnlock_Click(object sender, EventArgs e)
         {

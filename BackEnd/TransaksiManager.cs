@@ -88,7 +88,6 @@ namespace DigitalWallet.BackEnd
         // --- Helper ---
         private static int GetLastInsertId()
         {
-            // Menggunakan JalankanSelectSatu dari class Koneksi Anda
             object hasil = Koneksi.JalankanSelectSatu("SELECT LAST_INSERT_ID()");
             return hasil != null ? Convert.ToInt32(hasil) : -1;
         }
@@ -199,17 +198,7 @@ namespace DigitalWallet.BackEnd
             }
             return false;
         }
-        public static void SetWalletPin(int userId, string pinPolos)
-        {
-            // 1. Enkripsi PIN menggunakan AES agar aman di database
-            string pinTerenkripsi = Enkripsi.EncryptDouble(pinPolos);
-
-            // 2. Update kolom pin_encrypted berdasarkan user_id
-            string query = $@"UPDATE wallets SET pin_encrypted = '{pinTerenkripsi}' 
-                     WHERE user_id = {userId}";
-
-            Koneksi.JalankanQuery(query);
-        }
+        
     }
 }
 
